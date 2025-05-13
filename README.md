@@ -1,6 +1,6 @@
 # 🧩 CRUD Angular + .NET + MySQL (XAMPP) con Filtrado en Tiempo Real
 
-Este proyecto es una aplicación web completa que permite realizar operaciones **CRUD** (Crear, Leer, Actualizar y Eliminar) y **filtrado en tiempo real** en una tabla de datos. Está desarrollado con **Angular** en el frontend, **ASP.NET Core Web API** en el backend, y utiliza **MySQL** (ejecutándose en **XAMPP**) como sistema de almacenamiento de datos.
+Este proyecto es una aplicación web completa que permite realizar operaciones **CRUD** (Crear, Leer, Actualizar y Eliminar) y **filtrado en tiempo real** en una tabla de datos. Está desarrollado con **Angular** en el frontend, **.NET Web API** en el backend, y utiliza **MySQL** (ejecutándose en **XAMPP**) como sistema de almacenamiento de datos.
 
 ---
 
@@ -21,7 +21,7 @@ Este proyecto es una aplicación web completa que permite realizar operaciones *
 | Componente  | Tecnología                     |
 |-------------|-------------------------------|
 | Frontend    | Angular                        |
-| Backend     | ASP.NET Core Web API (.NET 6+) |
+| Backend     | NET  Web API  |
 | Base de datos | MySQL (XAMPP)               |
 | Comunicación | API RESTful                  |
 | IDEs        | Visual Studio, VS Code        |
@@ -43,4 +43,6 @@ Antes de ejecutar este proyecto, asegúrate de tener instalados:
 ### 🖥️ 1. Clonar el repositorio
 
 ```bash
+
+```
 
