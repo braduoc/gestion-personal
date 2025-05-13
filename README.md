@@ -51,7 +51,7 @@ npm install
 ```
 Ejecuta la app Angular:
 ```bash
-ng serve```
+ng serve
 ```
 ---
 
