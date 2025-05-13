@@ -27,5 +27,20 @@ Este proyecto es una aplicación web completa que permite realizar operaciones *
 | IDEs        | Visual Studio, VS Code        |
 
 ---
+## ⚙️ Requisitos previos
 
+Antes de ejecutar este proyecto, asegúrate de tener instalados:
+
+- [Node.js y npm](https://nodejs.org/)
+- [Angular CLI](https://angular.io/cli)
+- [Visual Studio 2022+](https://visualstudio.microsoft.com/) con el SDK de .NET
+- [XAMPP](https://www.apachefriends.org/index.html) con Apache y MySQL habilitados
+
+---
+
+## 🧰 Pasos para ejecutar el proyecto
+
+### 🖥️ 1. Clonar el repositorio
+
+```bash
 
