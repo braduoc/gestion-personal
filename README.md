@@ -47,10 +47,12 @@ https://github.com/braduoc/gestion-peronal.git
 ```
 Instala las dependencias del proyecto:
 ```bash
-npm install```
+npm install
+```
 Ejecuta la app Angular:
 ```bash
 ng serve```
+```
 ---
 
 ### 2. 🛢️ Configurar la base de datos MySQL en XAMPP
