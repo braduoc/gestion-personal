@@ -1,0 +1,110 @@
+<div class="card shadow rounded-3 border-0 bg-dark text-light mx-auto" style="max-width: 98%; margin: 2%;">
+  <div class="card-header d-flex justify-content-between align-items-center bg-dark border-0">
+    <h1 class="m-0">Gestión de Usuarios</h1>
+    
+    <div class="d-flex align-items-center">
+      <label for="filtroPropiedad" class="me-2 text-light" style="font-size: 1rem;">Filtrar por:</label>
+      <select id="filtroPropiedad" [(ngModel)]="filtroPropiedad" class="form-select form-select-sm me-3" style="max-width: 150px;">
+        <option value="id">ID</option>
+        <option value="first_Name">Nombre</option>
+        <option value="last_Name">Apellido</option>
+        <option value="email">Correo</option>
+        <option value="phone">Teléfono</option>
+        <option value="address">Dirección</option>
+      </select>
+    
+      <input type="text" [(ngModel)]="filtro" (input)="aplicarFiltro()" placeholder="Filtrar..." class="form-control form-control-sm" style="max-width: 250px;" />
+    </div>
+    
+    <button class="btn btn-success shadow-sm" (click)="abrirModal()">
+      <i class="fas fa-plus me-1"></i> Agregar Usuario
+    </button>
+  </div>
+  
+  <hr>
+
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <!-- Tabla solo visible si hay usuarios filtrados -->
+      <table class="table table-dark table-hover mb-0" *ngIf="usuariosFiltrados.length > 0">
+        <thead class="bg-dark">
+          <tr>
+            <th class="py-2 px-3 border-0">ID</th>
+            <th class="py-2 px-3 border-0">Nombre</th>
+            <th class="py-2 px-3 border-0">Apellido</th>
+            <th class="py-2 px-3 border-0">Email</th>
+            <th class="py-2 px-3 border-0">Teléfono</th>
+            <th class="py-2 px-3 border-0">Dirección</th>
+            <th class="py-2 px-3 border-0 text-center">Acciones</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr *ngFor="let usuario of usuariosFiltrados" class="align-middle">
+            <td class="py-2 px-3">{{ usuario.id }}</td>
+            <td class="py-2 px-3">{{ usuario.first_Name }}</td>
+            <td class="py-2 px-3">{{ usuario.last_Name }}</td>
+            <td class="py-2 px-3">{{ usuario.email }}</td>
+            <td class="py-2 px-3">{{ usuario.phone }}</td>
+            <td class="py-2 px-3">{{ usuario.address }}</td>
+            <td class="py-2 px-3 text-center">
+              <button class="btn btn-warning btn-sm me-2 shadow-sm" (click)="editarUsuario(usuario)">
+                <i class="fas fa-edit me-1"></i> Editar
+              </button>
+              <button class="btn btn-danger btn-sm shadow-sm" (click)="eliminarUsuario(usuario.id)">
+                <i class="fas fa-trash-alt me-1"></i> Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Mensaje si no hay usuarios encontrados -->
+      <div *ngIf="usuariosFiltrados.length === 0" class="alert alert-info text-center" role="alert">
+        No hay usuarios encontrados.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Bootstrap -->
+<div #modalUsuario id="modalUsuario" class="modal fade" tabindex="-1" aria-labelledby="modalUsuarioLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title" id="modalUsuarioLabel">
+          {{ editando ? 'Editar Usuario' : 'Nuevo Usuario' }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="firstName" class="form-label text-light">Nombre</label>
+            <input type="text" class="form-control bg-dark text-light border-secondary" id="firstName" [(ngModel)]="usuarioSeleccionado.first_Name" name="first_Name">
+          </div>
+          <div class="mb-3">
+            <label for="lastName" class="form-label text-light">Apellido</label>
+            <input type="text" class="form-control bg-dark text-light border-secondary" id="lastName" [(ngModel)]="usuarioSeleccionado.last_Name" name="last_Name">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label text-light">Correo Electrónico</label>
+            <input type="email" class="form-control bg-dark text-light border-secondary" id="email" [(ngModel)]="usuarioSeleccionado.email" name="email">
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label text-light">Teléfono</label>
+            <input type="text" class="form-control bg-dark text-light border-secondary" id="phone" [(ngModel)]="usuarioSeleccionado.phone" name="phone">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label text-light">Dirección</label>
+            <input type="text" class="form-control bg-dark text-light border-secondary" id="address" [(ngModel)]="usuarioSeleccionado.address" name="address">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer border-secondary">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="guardarUsuario()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
