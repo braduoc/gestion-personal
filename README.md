@@ -1,59 +1,85 @@
-# GestionPersonalAngular
+# 🧩 CRUD Angular + .NET + MySQL (XAMPP) con Filtrado en Tiempo Real
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.3.
+Este proyecto es una aplicación web completa que permite realizar operaciones **CRUD** (Crear, Leer, Actualizar y Eliminar) y **filtrado en tiempo real** en una tabla de datos. Está desarrollado con **Angular** en el frontend, **.NET Web API** en el backend, y utiliza **MySQL** (ejecutándose en **XAMPP**) como sistema de almacenamiento de datos.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 Características principales
 
+- ✅ Visualización de datos en una tabla con paginación y filtrado en tiempo real
+- ➕ Crear nuevos registros
+- ✏️ Editar registros existentes
+- ❌ Eliminar registros
+- 🔍 Filtro dinámico sin recargar la página
+- ⚙️ API RESTful para comunicar el frontend con el backend
+- 🛠️ Base de datos MySQL autogestionada con XAMPP
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+| Componente  | Tecnología                     |
+|-------------|-------------------------------|
+| Frontend    | Angular                        |
+| Backend     | NET  Web API  |
+| Base de datos | MySQL (XAMPP)               |
+| Comunicación | API RESTful                  |
+| IDEs        | Visual Studio, VS Code        |
+
+---
+## ⚙️ Requisitos previos
+
+Antes de ejecutar este proyecto, asegúrate de tener instalados:
+
+- [Node.js y npm](https://nodejs.org/)
+- [Angular CLI](https://angular.io/cli)
+- [Visual Studio 2022+](https://visualstudio.microsoft.com/) con el SDK de .NET
+- [XAMPP](https://www.apachefriends.org/index.html) con Apache y MySQL habilitados
+
+---
+
+## 🧰 Pasos para ejecutar el proyecto
+
+### 🖥️ 1. Clonar el repositorio
+
+```bash
+https://github.com/braduoc/gestion-peronal.git
+```
+Instala las dependencias del proyecto:
+```bash
+npm install
+```
+Ejecuta la app Angular:
 ```bash
 ng serve
 ```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 2. 🛢️ Configurar la base de datos MySQL en XAMPP
 
-## Code scaffolding
+1. Abre el panel de control de **XAMPP** y enciende **Apache** y **MySQL**.
+2. Abre tu navegador y entra en [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
+3. Crea una base de datos llamada `system`.
+4. Ejecuta el script SQL ubicado en `database/init.sql` (puedes pegarlo en phpMyAdmin → SQL).
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
+### 3. 🧱 Configurar y ejecutar el backend en .NET
+
+1. Abre la carpeta `WebApplication1` en **Visual Studio** o **VS Code**.
+2. Asegúrate de que el archivo `appsettings.json` tenga la cadena correcta de conexión:
+
+
+
+Instala las dependencias del proyecto :
 ```bash
-ng generate component component-name
+dotnet install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+Ejecuta el backend:
 ```bash
-ng generate --help
+dotnet run
 ```
 
-## Building
 
-To build the project run:
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
