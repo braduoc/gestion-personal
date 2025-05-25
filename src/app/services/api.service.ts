@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { IUsuario, IUsuarioParaCrear } from '../models/iusuario';
 
 @Injectable({
   providedIn: 'root'
@@ -12,20 +13,20 @@ export class ApiService {
     console.log(this.apiUrl)
   }
 
-  getAllCustomers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/api/customers`);
+  getAllCustomers(): Observable<IUsuario[]> {
+    return this.http.get<IUsuario[]>(`${this.apiUrl}/api/customers`);
   }
 
-  getCustomerById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/api/customers/${id}`);
+  getCustomerById(id: number): Observable<IUsuario> {
+    return this.http.get<IUsuario>(`${this.apiUrl}/api/customers/${id}`);
   }
 
-  createCustomer(customer: any): Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}/api/customers`, customer);
+  createCustomer(customer: IUsuarioParaCrear): Observable<IUsuario> {
+    return this.http.post<IUsuario>(`${this.apiUrl}/api/customers`, customer);
   }
 
-  updateCustomer(customer: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/api/customers`, customer);
+  updateCustomer(customer: IUsuario): Observable<boolean> {
+    return this.http.put<boolean>(`${this.apiUrl}/api/customers`, customer);
   }
 
   deleteCustomer(id: number): Observable<boolean> {

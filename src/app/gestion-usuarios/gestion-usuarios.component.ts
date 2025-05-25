@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../services/api.service';
+import { IUsuario, IUsuarioParaCrear } from '../models/iusuario';
+import { Observable } from 'rxjs';
 
 
 declare var bootstrap: any;
@@ -12,14 +14,16 @@ declare var bootstrap: any;
   imports: [CommonModule, FormsModule],
   templateUrl: './gestion-usuarios.component.html',
   styleUrls: ['./gestion-usuarios.component.css']
-})export class GestionUsuariosComponent implements OnInit {
+}) export class GestionUsuariosComponent implements OnInit {
+
   @ViewChild('modalUsuario') modalElement!: ElementRef;
-  filtroPropiedad: string = 'first_Name';  // Propiedad por defecto a filtrar
-  usuariosFiltrados: any[] = [];
-  filtro: string = '';  // Filtro para buscar usuarios
-  usuarios: any[] = [];
-  usuarioSeleccionado: any = {
-    id: null,
+
+  filtroPropiedad: string = 'first_Name';
+  usuariosFiltrados: IUsuario[] = [];
+  filtro: string = '';
+  usuarios: IUsuario[] = [];
+  usuarioSeleccionado: IUsuario = {
+    id: 0,
     first_Name: '',
     last_Name: '',
     email: '',
@@ -29,7 +33,7 @@ declare var bootstrap: any;
   editando: boolean = false;
   modalInstance: any;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.obtenerUsuarios();
@@ -47,7 +51,7 @@ declare var bootstrap: any;
     this.apiService.getAllCustomers().subscribe({
       next: (data) => {
         this.usuarios = data;
-        this.usuariosFiltrados = [...this.usuarios];  // Inicializamos los usuarios filtrados
+        this.usuariosFiltrados = [...this.usuarios];
         console.log('Usuarios obtenidos:', data);
       },
       error: (err) => {
@@ -57,13 +61,12 @@ declare var bootstrap: any;
   }
 
   aplicarFiltro(): void {
-    const filtroTexto = this.filtro.toLowerCase();  // Convertimos el filtro a minúsculas
+    const filtroTexto = this.filtro.toLowerCase();
     this.usuariosFiltrados = this.usuarios.filter((usuario) => {
-      // Filtramos según la propiedad seleccionada
       return usuario[this.filtroPropiedad]?.toString().toLowerCase().includes(filtroTexto);
     });
   }
-  
+
 
   abrirModal(usuario?: any): void {
     this.editando = !!usuario;
@@ -78,7 +81,7 @@ declare var bootstrap: any;
       };
     } else {
       this.usuarioSeleccionado = {
-        id: null,
+        id: 0,
         first_Name: '',
         last_Name: '',
         email: '',
@@ -90,34 +93,25 @@ declare var bootstrap: any;
   }
 
   guardarUsuario(): void {
-    const usuarioParaEditar = {
-      id: this.usuarioSeleccionado.id,
-      first_Name: this.usuarioSeleccionado.first_Name,
-      last_Name: this.usuarioSeleccionado.last_Name,
-      email: this.usuarioSeleccionado.email,
-      phone: this.usuarioSeleccionado.phone,
-      address: this.usuarioSeleccionado.address
-    };
-    const usuarioParaCrear = {
-      name: this.usuarioSeleccionado.first_Name || this.usuarioSeleccionado.name,
-      lastName: this.usuarioSeleccionado.last_Name || this.usuarioSeleccionado.lastName,
-      email: this.usuarioSeleccionado.email,
-      phone: this.usuarioSeleccionado.phone,
-      address: this.usuarioSeleccionado.address
-    };
+    const usuarioParaEditar: IUsuario = { ...this.usuarioSeleccionado };
+    const usuarioParaCrear: IUsuarioParaCrear = { ...this.usuarioSeleccionado };
 
-    const operacion = this.editando ? 
-      this.apiService.updateCustomer(usuarioParaEditar) :
-      this.apiService.createCustomer(usuarioParaCrear)
+    let operacion: Observable<any>;
+
+    if (this.editando) {
+      operacion = this.apiService.updateCustomer(usuarioParaEditar);
+    } else {
+      operacion = this.apiService.createCustomer(usuarioParaCrear);
+    }
 
     operacion.subscribe({
       next: () => {
-        console.log(this.editando ? 'Usuario actualizado:' : 'Usuario creado:', usuarioParaEditar);
+        console.log(this.editando ? 'Usuario actualizado:' : 'Usuario creado:', this.usuarioSeleccionado);
         this.obtenerUsuarios();
         this.modalInstance.hide();
         this.limpiarFormulario();
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error(this.editando ? 'Error al actualizar usuario:' : 'Error al crear usuario:', err);
       }
     });
@@ -141,7 +135,7 @@ declare var bootstrap: any;
 
   private limpiarFormulario(): void {
     this.usuarioSeleccionado = {
-      id: null,
+      id: 0,
       first_Name: '',
       last_Name: '',
       email: '',
