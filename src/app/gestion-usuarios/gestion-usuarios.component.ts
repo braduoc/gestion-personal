@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { IUsuario, IUsuarioParaCrear } from '../models/iusuario';
 import { Observable } from 'rxjs';
@@ -17,6 +17,8 @@ declare var bootstrap: any;
 }) export class GestionUsuariosComponent implements OnInit {
 
   @ViewChild('modalUsuario') modalElement!: ElementRef;
+  @ViewChild('usuarioForm') usuarioForm!: NgForm;
+
 
   filtroPropiedad: string = 'first_Name';
   usuariosFiltrados: IUsuario[] = [];
@@ -39,13 +41,18 @@ declare var bootstrap: any;
     this.obtenerUsuarios();
   }
 
-  ngAfterViewInit() {
-    if (this.modalElement?.nativeElement) {
-      this.modalInstance = new bootstrap.Modal(this.modalElement.nativeElement);
-    } else {
-      console.error('modalElement no está definido.');
-    }
+ ngAfterViewInit() {
+  if (this.modalElement?.nativeElement) {
+    this.modalInstance = new bootstrap.Modal(this.modalElement.nativeElement);
+
+    this.modalElement.nativeElement.addEventListener('hidden.bs.modal', () => {
+      this.limpiarFormulario();
+    });
+  } else {
+    console.error('modalElement no está definido.');
   }
+}
+
 
   obtenerUsuarios(): void {
     this.apiService.getAllCustomers().subscribe({
@@ -143,5 +150,8 @@ declare var bootstrap: any;
       address: ''
     };
     this.editando = false;
+    if (this.usuarioForm) {
+    this.usuarioForm.resetForm();
+  }
   }
 }

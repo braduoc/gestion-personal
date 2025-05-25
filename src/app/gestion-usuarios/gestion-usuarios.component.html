@@ -1,46 +1,53 @@
-<div class="card shadow rounded-3 border-0 bg-dark text-light mx-auto" style="max-width: 98%; margin: 2%;">
-  <div class="card-header d-flex justify-content-between align-items-center bg-dark border-0">
-    <h1 class="m-0">Gestión de Usuarios</h1>
-    
-    <div class="d-flex align-items-center">
-      <label for="filtroPropiedad" class="me-2 text-light" style="font-size: 1rem;">Filtrar por:</label>
-      <select id="filtroPropiedad" [(ngModel)]="filtroPropiedad" class="form-select form-select-sm me-3" style="max-width: 150px;">
-        <option value="id">ID</option>
-        <option value="first_Name">Nombre</option>
-        <option value="last_Name">Apellido</option>
-        <option value="email">Correo</option>
-        <option value="phone">Teléfono</option>
-        <option value="address">Dirección</option>
-      </select>
-    
-      <input type="text" [(ngModel)]="filtro" (input)="aplicarFiltro()" placeholder="Filtrar..." class="form-control form-control-sm" style="max-width: 250px;" />
-    </div>
-    
-    <button class="btn btn-success shadow-sm" (click)="abrirModal()">
+<div class="card shadow rounded-3 border-0 bg-dark text-light mx-auto p-3" style="max-width: 98%; margin: 2%;">
+  <div class="card-header d-flex flex-wrap justify-content-between align-items-center bg-dark border-0 gap-3">
+    <h1 class="m-0 flex-grow-1" style="font-size: 1.5rem;">Gestión de Usuarios</h1>
+
+   <div class="d-flex flex-wrap align-items-center gap-2 w-100">
+  <div class="d-flex flex-grow-1 gap-2 align-items-center">
+    <label for="filtroPropiedad" class="text-light mb-0" style="font-size: 1rem;">Filtrar por:</label>
+
+    <select id="filtroPropiedad" [(ngModel)]="filtroPropiedad"
+      class="form-select form-select-sm text-dark bg-light border-secondary"
+      style="max-width: 150px; min-width: 100px;">
+      <option value="id">ID</option>
+      <option value="first_Name">Nombre</option>
+      <option value="last_Name">Apellido</option>
+      <option value="email">Correo</option>
+      <option value="phone">Teléfono</option>
+      <option value="address">Dirección</option>
+    </select>
+
+    <input type="text" [(ngModel)]="filtro" (input)="aplicarFiltro()" placeholder="Filtrar..."
+      class="form-control form-control-sm text-dark bg-light border-secondary"
+      style="width: 100%;" />
+  </div>
+  <button class="btn btn-success shadow-sm" (click)="abrirModal()">
       <i class="fas fa-plus me-1"></i> Agregar Usuario
     </button>
   </div>
-  
-  <hr>
+
+
+
+  </div>
+
+  <hr class="my-2 text-secondary" />
 
   <div class="card-body p-0">
     <div class="table-responsive">
-      <!-- Tabla solo visible si hay usuarios filtrados -->
       <table class="table table-dark table-hover mb-0" *ngIf="usuariosFiltrados.length > 0">
         <thead class="bg-dark">
           <tr>
-            <th class="py-2 px-3 border-0">ID</th>
-            <th class="py-2 px-3 border-0">Nombre</th>
-            <th class="py-2 px-3 border-0">Apellido</th>
-            <th class="py-2 px-3 border-0">Email</th>
-            <th class="py-2 px-3 border-0">Teléfono</th>
-            <th class="py-2 px-3 border-0">Dirección</th>
-            <th class="py-2 px-3 border-0 text-center">Acciones</th>
+            <th class="py-2 px-3">ID</th>
+            <th class="py-2 px-3">Nombre</th>
+            <th class="py-2 px-3">Apellido</th>
+            <th class="py-2 px-3">Email</th>
+            <th class="py-2 px-3">Teléfono</th>
+            <th class="py-2 px-3">Dirección</th>
+            <th class="py-2 px-3 text-center">Acciones</th>
           </tr>
         </thead>
-        
         <tbody>
-          <tr *ngFor="let usuario of usuariosFiltrados" class="align-middle">
+          <tr *ngFor="let usuario of usuariosFiltrados">
             <td class="py-2 px-3">{{ usuario.id }}</td>
             <td class="py-2 px-3">{{ usuario.first_Name }}</td>
             <td class="py-2 px-3">{{ usuario.last_Name }}</td>
@@ -48,18 +55,19 @@
             <td class="py-2 px-3">{{ usuario.phone }}</td>
             <td class="py-2 px-3">{{ usuario.address }}</td>
             <td class="py-2 px-3 text-center">
-              <button class="btn btn-warning btn-sm me-2 shadow-sm" (click)="editarUsuario(usuario)">
-                <i class="fas fa-edit me-1"></i> Editar
-              </button>
-              <button class="btn btn-danger btn-sm shadow-sm" (click)="eliminarUsuario(usuario.id)">
-                <i class="fas fa-trash-alt me-1"></i> Eliminar
-              </button>
+              <div class="d-flex justify-content-center flex-wrap gap-2">
+                <button class="btn btn-warning btn-sm shadow-sm" (click)="editarUsuario(usuario)">
+                  <i class="fas fa-edit me-1"></i> Editar
+                </button>
+                <button class="btn btn-danger btn-sm shadow-sm" (click)="eliminarUsuario(usuario.id)">
+                  <i class="fas fa-trash-alt me-1"></i> Eliminar
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <!-- Mensaje si no hay usuarios encontrados -->
       <div *ngIf="usuariosFiltrados.length === 0" class="alert alert-info text-center" role="alert">
         No hay usuarios encontrados.
       </div>
@@ -67,9 +75,10 @@
   </div>
 </div>
 
-<!-- Modal Bootstrap -->
-<div #modalUsuario id="modalUsuario" class="modal fade" tabindex="-1" aria-labelledby="modalUsuarioLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<!-- Modal -->
+<div #modalUsuario id="modalUsuario" class="modal fade" tabindex="-1" aria-labelledby="modalUsuarioLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content bg-dark text-light">
       <div class="modal-header border-secondary">
         <h5 class="modal-title" id="modalUsuarioLabel">
@@ -77,33 +86,74 @@
         </h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
       <div class="modal-body">
-        <form>
+        <form #usuarioForm="ngForm" novalidate>
+          <!-- Nombre -->
           <div class="mb-3">
-            <label for="firstName" class="form-label text-light">Nombre</label>
-            <input type="text" class="form-control bg-dark text-light border-secondary" id="firstName" [(ngModel)]="usuarioSeleccionado.first_Name" name="first_Name">
+            <label for="firstName" class="form-label">Nombre</label>
+            <input type="text" class="form-control bg-dark text-light border-secondary" id="firstName"
+              name="first_Name" placeholder="Ej: Juan" [(ngModel)]="usuarioSeleccionado.first_Name" required
+              minlength="2" #firstName="ngModel" />
+            <div class="text-danger" *ngIf="firstName.invalid && (firstName.touched || firstName.dirty)">
+              <small *ngIf="firstName.errors?.['required']">El nombre es obligatorio.</small>
+              <small *ngIf="firstName.errors?.['minlength']">Debe tener al menos 2 caracteres.</small>
+            </div>
           </div>
+
+          <!-- Apellido -->
           <div class="mb-3">
-            <label for="lastName" class="form-label text-light">Apellido</label>
-            <input type="text" class="form-control bg-dark text-light border-secondary" id="lastName" [(ngModel)]="usuarioSeleccionado.last_Name" name="last_Name">
+            <label for="lastName" class="form-label">Apellido</label>
+            <input type="text" class="form-control bg-dark text-light border-secondary" id="lastName"
+              name="last_Name" placeholder="Ej: Pérez" [(ngModel)]="usuarioSeleccionado.last_Name" required
+              minlength="2" #lastName="ngModel" />
+            <div class="text-danger" *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)">
+              <small *ngIf="lastName.errors?.['required']">El apellido es obligatorio.</small>
+              <small *ngIf="lastName.errors?.['minlength']">Debe tener al menos 2 caracteres.</small>
+            </div>
           </div>
+
+          <!-- Email -->
           <div class="mb-3">
-            <label for="email" class="form-label text-light">Correo Electrónico</label>
-            <input type="email" class="form-control bg-dark text-light border-secondary" id="email" [(ngModel)]="usuarioSeleccionado.email" name="email">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control bg-dark text-light border-secondary" id="email" name="email"
+              placeholder="Ej: juan@email.com" [(ngModel)]="usuarioSeleccionado.email" required email #email="ngModel" />
+            <div class="text-danger" *ngIf="email.invalid && (email.touched || email.dirty)">
+              <small *ngIf="email.errors?.['required']">El correo es obligatorio.</small>
+              <small *ngIf="email.errors?.['email']">Formato de correo inválido.</small>
+            </div>
           </div>
+
+          <!-- Teléfono -->
           <div class="mb-3">
-            <label for="phone" class="form-label text-light">Teléfono</label>
-            <input type="text" class="form-control bg-dark text-light border-secondary" id="phone" [(ngModel)]="usuarioSeleccionado.phone" name="phone">
+            <label for="phone" class="form-label">Teléfono</label>
+            <input type="text" class="form-control bg-dark text-light border-secondary" id="phone" name="phone"
+              placeholder="Ej: 912345678" [(ngModel)]="usuarioSeleccionado.phone" required pattern="^[0-9]{9,15}$"
+              #phone="ngModel" />
+            <div class="text-danger" *ngIf="phone.invalid && (phone.touched || phone.dirty)">
+              <small *ngIf="phone.errors?.['required']">El teléfono es obligatorio.</small>
+              <small *ngIf="phone.errors?.['pattern']">Número no válido (9 a 15 dígitos).</small>
+            </div>
           </div>
+
+          <!-- Dirección -->
           <div class="mb-3">
-            <label for="address" class="form-label text-light">Dirección</label>
-            <input type="text" class="form-control bg-dark text-light border-secondary" id="address" [(ngModel)]="usuarioSeleccionado.address" name="address">
+            <label for="address" class="form-label">Dirección</label>
+            <input type="text" class="form-control bg-dark text-light border-secondary" id="address" name="address"
+              placeholder="Ej: Av. Siempre Viva 742" [(ngModel)]="usuarioSeleccionado.address" required minlength="5"
+              #address="ngModel" />
+            <div class="text-danger" *ngIf="address.invalid && (address.touched || address.dirty)">
+              <small *ngIf="address.errors?.['required']">La dirección es obligatoria.</small>
+              <small *ngIf="address.errors?.['minlength']">Debe tener al menos 5 caracteres.</small>
+            </div>
           </div>
         </form>
       </div>
+
       <div class="modal-footer border-secondary">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="guardarUsuario()">Guardar</button>
+        <button type="button" class="btn btn-primary" [disabled]="usuarioForm.invalid"
+          (click)="guardarUsuario()">Guardar</button>
       </div>
     </div>
   </div>
